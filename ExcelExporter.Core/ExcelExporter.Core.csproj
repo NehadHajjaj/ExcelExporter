@@ -1,17 +1,21 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
-    <Version>0.0.0-beta</Version>
-    <Authors>UNOPS</Authors>
-    <Company>UNOPS</Company>
-    <Copyright>Copyright 2017 (c) UNOPS. All rights reserved.</Copyright>
-    <RepositoryUrl>https://github.com/UNOPS/ExcelExporter</RepositoryUrl>
-    <Description>ExcelExporter is a very simple .NET Standard library to help you at exporting data to excel file.</Description>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<Version>0.0.1-beta</Version>
+		<Authors>UNOPS</Authors>
+		<Copyright>Copyright 2018 (c) UNOPS. All rights reserved.</Copyright>
+		<RepositoryUrl>https://github.com/UNOPS/ExcelExporter</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/UNOPS/ExcelExporter</PackageProjectUrl>
+		<Description>ExcelExporter is a very simple .NET Standard library which can help with exporting tabular data to an excel file.</Description>
+	</PropertyGroup>
+	
+	<PropertyGroup>
+		<DocumentationFile>bin\$(Configuration)\$(Platform)\ExcelExporter.Core.xml</DocumentationFile>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="EPPlus.Core" Version="1.5.2" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="EPPlus.Core" Version="1.5.2" />
+	</ItemGroup>
 
 </Project>

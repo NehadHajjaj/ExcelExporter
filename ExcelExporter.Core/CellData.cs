@@ -21,8 +21,20 @@
 		public CellData(object value, string url)
 		{
 			this.Value = value;
-			this.Hyperlink = new Uri(url);
+			if (Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute))
+			{
+				this.Hyperlink = new Uri(url);
+			}
+			else
+			{
+				throw new ExcelException($"The provided url ({url}) is not valid.");
+			}
 		}
+
+		/// <summary>
+		/// Defines number format for the cell. Applicable only if the cell stores a number.
+		/// </summary>
+		public string NumberFormat { get; set; }
 
 		/// <summary>
 		/// Gets or sets url to which the user will be navigated if she clicks on the cell.
@@ -38,6 +50,5 @@
 		public object Value { get; set; }
 
 		public bool WrapText { get; set; }
-		public string Format { get; set; }
 	}
 }

@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelExporter.Test", "ExcelExporter.Test\ExcelExporter.Test.csproj", "{3549CDBB-401A-4088-9812-9441FE43638E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelExporter.Core", "ExcelExporter.Core\ExcelExporter.Core.csproj", "{7EB7E8AC-CF2D-4A0D-B770-31C0928D9CBC}"
 EndProject
 Global
@@ -13,10 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3549CDBB-401A-4088-9812-9441FE43638E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3549CDBB-401A-4088-9812-9441FE43638E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3549CDBB-401A-4088-9812-9441FE43638E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3549CDBB-401A-4088-9812-9441FE43638E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7EB7E8AC-CF2D-4A0D-B770-31C0928D9CBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7EB7E8AC-CF2D-4A0D-B770-31C0928D9CBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EB7E8AC-CF2D-4A0D-B770-31C0928D9CBC}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -15,13 +15,13 @@
 		}
 
 		/// <summary>
-		/// Gets or sets header text.
-		/// </summary>
-		public string HeaderText { get; set; }
-
-		/// <summary>
 		/// Gets or sets function to render column's contents.
 		/// </summary>
 		public Func<T, CellData> GetValueMethod { get; set; }
+
+		/// <summary>
+		/// Gets or sets header text.
+		/// </summary>
+		public string HeaderText { get; set; }
 	}
 }
