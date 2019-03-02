@@ -22,18 +22,27 @@
 		/// <param name="worksheetName">Name for the worksheet where the table will be located.</param>
 		/// <param name="columns">Table's column definitions.</param>
 		/// <param name="data">List of items to render.</param>
+		/// <param name="header">Header.</param>
 		/// <returns>ExcelFile instance.</returns>
-		public static ExcelFile Generate<T>(string worksheetName, IList<Column<T>> columns, IList<T> data)
+		public static ExcelFile Generate<T>(string worksheetName, IList<Column<T>> columns, IList<T> data, object header)
 		{
 			using (var package = new ExcelPackage())
 			{
 				ExcelWorksheet worksheet = package.Workbook.Worksheets.Add(worksheetName);
 
-				// Create header.
-				CreateHeader(worksheet, columns, 1, 1);
+				if (header != null)
+				{
+					// Create header.
+					CreateHeader(worksheet, columns, header, 1, 1);
+				}
+
+				var startRow = header != null ? 2 : 1;
+
+				// Create columns labels.
+				CreateColumnLabels(worksheet, columns, startRow, 1);
 
 				// Populate data.
-				PopulateData(worksheet, columns, data, 2, 1);
+				PopulateData(worksheet, columns, data, startRow + 1, 1);
 
 				// Auto-adjust column widths.
 				worksheet.Cells.AutoFitColumns();
@@ -58,7 +67,7 @@
 					ExcelWorksheet worksheet = package.Workbook.Worksheets.Add(definition.WorksheetName);
 
 					// Create header.
-					CreateHeader(worksheet, definition.Columns, 1, 1);
+					CreateColumnLabels(worksheet, definition.Columns, 1, 1);
 
 					// Populate data.
 					PopulateData(worksheet, definition.Columns, definition.Data, 2, 1);
@@ -93,7 +102,7 @@
 			{
 				columns.AddRange(o.Select(property => new Column<object>(property.Key, null)));
 
-				return Generate(worksheetName, columns, rows.ToList());
+				return Generate(worksheetName, columns, rows.ToList(), null);
 			}
 
 			var properties = rows.First().GetType().GetProperties();
@@ -129,10 +138,10 @@
 				}
 			}
 
-			return Generate(worksheetName, columns, rows.ToList());
+			return Generate(worksheetName, columns, rows.ToList(), null);
 		}
 
-		private static void CreateHeader<T>(ExcelWorksheet worksheet, IList<Column<T>> columns, int startRow, int startColumn)
+		private static void CreateColumnLabels<T>(ExcelWorksheet worksheet, IList<Column<T>> columns, int startRow, int startColumn)
 		{
 			for (int c = 0; c < columns.Count; ++c)
 			{
@@ -146,6 +155,20 @@
 
 			headerCells.Style.Font.Color.SetColor(Color.White);
 			headerCells.Style.Font.Bold = true;
+		}
+
+		private static void CreateHeader<T>(ExcelWorksheet worksheet, IList<Column<T>> columns, object header, int startRow, int startColumn)
+		{
+			worksheet.Cells[startRow, startColumn, startRow, startColumn].Value = header.ToString();
+			worksheet.Cells[startRow, startColumn, startRow, columns.Count].Merge = true;
+
+			var headerCell = worksheet.Cells[startRow, startColumn, startRow, columns.Count];
+
+			headerCell.Style.Fill.PatternType = ExcelFillStyle.Solid;
+			headerCell.Style.Fill.BackgroundColor.SetColor(Color.White);
+			headerCell.Style.Fill.PatternType = ExcelFillStyle.Solid;
+			headerCell.Style.Font.Bold = true;
+			headerCell.Style.Font.Size = 16;
 		}
 
 		private static ExcelFile EmptyFile()
@@ -188,7 +211,7 @@
 					if (cellData.Type == CellType.Image)
 					{
 						// Row is always 1-based, not 0-based.
-						int row = i + 1;
+						int row = i + (startRow - 1);
 
 						worksheet.AddImage((byte[])cellData.Value, row, columns.Count);
 					}
